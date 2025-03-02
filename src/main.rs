@@ -3,7 +3,6 @@ use rfd::FileHandle;
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");
 const MAIN_CSS: Asset = asset!("/assets/main.css");
-const HEADER_SVG: Asset = asset!("/assets/header.svg");
 
 fn main() {
     dioxus::launch(App);
@@ -49,8 +48,13 @@ pub fn FileSelection() -> Element {
                 },
                 div {
                     class: "content-container",
+                    onclick: move |_| async move {
+                        if let Some(p) = rfd::AsyncFileDialog::new().pick_files().await {
+                            selected_paths.extend(p);
+                        }
+                    },
                     if !selected_paths.is_empty(){
-                        p {"Selected files:"}
+                        h2 {"Selected files:"}
                     },
                     ul {
                         for path in selected_paths.iter().map(|p| p.file_name()){
@@ -58,71 +62,20 @@ pub fn FileSelection() -> Element {
                         }
                     },
                     if selected_paths.is_empty(){
-                        p {"Select files to proceed"}
+                        h2 {"Select files to proceed"}
                     }
                 }
                 if !selected_paths.is_empty(){
                     div {
                         class: "content-container",
-                        p {"Select device"}
-                        p {
+                        h2 {"Select device"}
+                        h3 {
                             "Heli",
-                            p {"127.0.0.1"}
+                            p {"- 127.0.0.1"}
                         }
                     }
                 }
             }
         }
     }
-}
-
-#[component]
-pub fn Hero() -> Element {
-    rsx! {
-        div {
-            id: "hero",
-            img { src: HEADER_SVG, id: "header" }
-            div { id: "links",
-                a { href: "https://dioxuslabs.com/learn/0.6/", "📚 Learn Dioxus" }
-                a { href: "https://dioxuslabs.com/awesome", "🚀 Awesome Dioxus" }
-                a { href: "https://github.com/dioxus-community/", "📡 Community Libraries" }
-                a { href: "https://github.com/DioxusLabs/sdk", "⚙️ Dioxus Development Kit" }
-                a { href: "https://marketplace.visualstudio.com/items?itemName=DioxusLabs.dioxus", "💫 VSCode Extension" }
-                a { href: "https://discord.gg/XgGxMSkvUM", "👋 Community Discord" }
-            }
-        }
-    }
-}
-
-/// Echo component that demonstrates fullstack server functions.
-#[component]
-fn Echo() -> Element {
-    let mut response = use_signal(|| String::new());
-
-    rsx! {
-        div {
-            id: "echo",
-            h4 { "ServerFn Echo" }
-            input {
-                placeholder: "Type here to echo...",
-                oninput:  move |event| async move {
-                    let data = echo_server(event.value()).await.unwrap();
-                    response.set(data);
-                },
-            }
-
-            if !response().is_empty() {
-                p {
-                    "Server echoed: "
-                    i { "{response}" }
-                }
-            }
-        }
-    }
-}
-
-/// Echo the user input on the server.
-#[server(EchoServer)]
-async fn echo_server(input: String) -> Result<String, ServerFnError> {
-    Ok(input)
 }
