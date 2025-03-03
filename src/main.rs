@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
 use rfd::FileHandle;
+use web_sys::{wasm_bindgen::JsCast, EventTarget, HtmlInputElement};
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");
 const MAIN_CSS: Asset = asset!("/assets/main.css");
@@ -19,11 +20,13 @@ fn App() -> Element {
 
 #[component]
 pub fn FileSelection() -> Element {
-    let mut selected_paths = use_signal(|| Vec::<FileHandle>::new());
+    let mut selected = use_signal(|| EventTarget::new());
+
     rsx! {
         div {
             class: "app-container",
             div {
+                /*
                 class: "content-container",
                 div{
                     class: "button-container",
@@ -45,7 +48,18 @@ pub fn FileSelection() -> Element {
                         },
                         "Add to selected"
                     }
+                },*/
+                input {
+                    r#type: "file", 
+                    multiple: true,
+                    onchange: move |event| {
+                        use dioxus::web::WebEventExt;
+                        let kek = event.as_web_event().target().unwrap();
+                        let casted = kek.dyn_into::<HtmlInputElement>().unwrap();
+                        
+                    }
                 },
+                /*
                 div {
                     class: "content-container",
                     onclick: move |_| async move {
@@ -74,7 +88,7 @@ pub fn FileSelection() -> Element {
                             p {"- 127.0.0.1"}
                         }
                     }
-                }
+                }*/
             }
         }
     }
