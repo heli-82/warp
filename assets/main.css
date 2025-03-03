@@ -1,9 +1,9 @@
 :root {
-    --bg-primary: #1a2a42;
-    --bg-secondary: #0f172a;
-    --text-primary: #e8d8bf;
-    --accent: #f97316;
-    --glass-bg: rgba(30, 58, 138, 0.15);
+    --bg-primary: #15151c;
+    --bg-secondary: #15151c;
+    --text-primary: #d1d1fe;
+    --accent: #d1d1fe;
+    --glass-bg: rgba(44, 53, 78, 0.15);
     --glass-border: rgba(255, 255, 255, 0.1);
     --spacing-standard: 1.5rem;
 }
@@ -18,6 +18,21 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+input[type=file]::file-selector-button {
+    margin-right: 20px;
+    border: none;
+    background: #d1d1fe;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #15151c;
+    cursor: pointer;
+    transition: background .2s ease-in-out;
+}
+
+input[type=file]::file-selector-button:hover {
+    background: #d1d1fe;
 }
 
 .app-container {
@@ -40,7 +55,7 @@ body {
 
 .btn {
     background: var(--accent);
-    color: #fff;
+    color: #15151c;
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
@@ -119,25 +134,27 @@ body {
     background: rgba(255, 255, 255, 0.1);
 }
 
-p, li {
+p,
+li {
     color: #8a8782;
 }
+
 /* Mobile responsiveness */
 @media (max-width: 640px) {
     .app-container {
         margin: 1rem;
     }
-    
+
     .button-container {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .btn {
         width: 100%;
         max-width: 280px;
     }
-    
+
     .content-container {
         padding: 1.5rem;
     }

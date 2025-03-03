@@ -26,30 +26,21 @@ pub fn FileSelection() -> Element {
         div {
             class: "app-container",
             div {
-                /*
                 class: "content-container",
+                /*
                 div{
                     class: "button-container",
                     button {
                         class: "btn",
-                        onclick: move |_| async move {
-                            if let Some(p) = rfd::AsyncFileDialog::new().pick_files().await {
-                                selected_paths.set(p);
-                            }
-                        },
                         "Open Files"
                     },
                     button {
                         class: "btn",
-                        onclick: move |_| async move {
-                            if let Some(p) = rfd::AsyncFileDialog::new().pick_files().await {
-                                selected_paths.extend(p);
-                            }
-                        },
                         "Add to selected"
                     }
                 },*/
                 input {
+                    class: "file-input",
                     r#type: "file", 
                     multiple: true,
                     onchange: move |event| {

@@ -7,7 +7,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dioxus = { version = "0.6.0", features = ["fullstack"] }
+dioxus = { version = "0.6.0", features = ["web"] }
 rfd = "0.15.2"
 web-sys = { version = "0.3.77", features = ["EventTarget"] }
 # tokio = { version = "1.43.0", features = ["full"] }
